@@ -1,6 +1,6 @@
 def tranforma():
     '''
-    Função resposável por reseber um ficheiro
+    Função resposável por receber um ficheiro
     e de dar return de uma sequência em string
     '''
     filename = input ("filename: ")
