@@ -48,7 +48,7 @@ def traducao():
     'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
     'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W'}
 
-    cadeiaDNA= input()
+    cadeiaDNA= input('Insira uma sequência de DNA: ')
     cadeiaDNA= cadeiaDNA.upper()
     def tradux(DNA): 
         import re
@@ -62,8 +62,17 @@ def traducao():
     for a in range(3):
         return (tradux(cadeiaDNA[a:]))
 
-traducao()
-
+def validarseq():
+    '''
+    Função responsável por verificar 
+    se uma sequência é válida ou não
+    '''
+    seq = input('Insira uma sequência: ')
+    seq = seq.upper()
+    if len(set(seq) - {'A','C','G','T'})==0:
+        return (True)
+    else:
+        return (False)
 
 
 
