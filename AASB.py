@@ -46,8 +46,12 @@ def transcricao(seq):
     '''
     Função responsável pela transcrição de DNA
     '''
-    seq_trans = seq.replace('A', 'u').replace('T', 'a').replace('C', 'g').replace('G', 'c').upper()
-    return (seq_trans)
+    seq = seq.upper()
+    if validarseq(seq)==True:
+        seq_trans = seq.replace('A', 'u').replace('T', 'a').replace('C', 'g').replace('G', 'c').upper()
+        return (seq_trans)
+    else:
+        return('Não é um sequência válida de DNA')
 
 def traducao(cadeiaDNA):
     '''
@@ -72,17 +76,16 @@ def traducao(cadeiaDNA):
     'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W'}
 
     cadeiaDNA= cadeiaDNA.upper()
-    def tradux(DNA): 
+    if validarseq(cadeiaDNA)==True:
         import re
-        DNA = re.findall('...', DNA)
+        DNA = re.findall('...',cadeiaDNA)
         t = []
         for y in DNA:
             t.append(gencode[y])
         result=''.join(t)
         return(result)
-
-    for a in range(3):
-        return (tradux(cadeiaDNA[a:]))
+    else:
+        return('Não é uma sequência de DNA')
 
 def validarseq(seq):
     '''
@@ -100,12 +103,16 @@ def contar_bases(seq):
     Função que conta as bases de uma sequência e
     devolve um dicionário com a contagem
     '''
-    nucleotidos = {}
-    for x in seq:
-        if x not in nucleotidos:
-            nucleotidos [x]= 0
-        nucleotidos[x]+= 1
-    return(nucleotidos)
+    seq= seq.upper()
+    if validarseq(seq)==True:
+        nucleotidos = {}
+        for x in seq:
+            if x not in nucleotidos:
+                nucleotidos [x]= 0
+            nucleotidos[x]+= 1
+        return(nucleotidos)
+    else:
+        return('string apresentada não é uma sequência')
 
 def reading_frames(seq):
     '''
@@ -141,17 +148,21 @@ def reading_frames(seq):
         result = "".join(l)
         return (result)
     
-    seq = seq.upper()  
-
-    for a in range(3):
-        return (traduz(seq[a:]))
-
-    seq1 = seq[::-1]
-    seq1 = seq1.replace('A','t').replace('T','a').replace('C','g').replace('G','c').upper()
-
-    for a in range(3):
-        return (traduz(seq1[a:]))
-
+    seq = seq.upper()
+    if validarseq(seq)==True:
+        seq1 = seq [::-1]
+        seq1 = seq1.replace('A','t').replace('T','a').replace('C','g').replace('G','c').upper()
+        l2 = []
+        for x in range(3):
+            l2.eppend(traduz(seq1[x:]))
+    
+        l1 = []
+        for a in range(3):
+            l1.append(traduz(seq[a:]))
+        l3 = []
+        l3 = l2 + l1
+        return(l3)
+    
 def proteins(seq):
     '''
     Função que devolve a lista de todas
@@ -160,8 +171,9 @@ def proteins(seq):
     tamanho
     '''
     seq = seq.upper()
-    import re
-    gencode = {
+    if validarseq(seq)== True:
+        import re
+        gencode = {
             'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
             'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
             'AAC':'N', 'AAT':'N', 'AAA':'K', 'AAG':'K',
@@ -176,45 +188,30 @@ def proteins(seq):
             'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGT':'G',
             'TCA':'S', 'TCC':'S', 'TCG':'S', 'TCT':'S',
             'TTC':'F', 'TTT':'F', 'TTA':'L', 'TTG':'L',
-            'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
+            'TAC':'Y', 'TAT':'Y', 'TAA':'', 'TAG':'',
             'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W'}
 
-    def traducao(seq):
-        proteina = []
-        for i in range(3):
-            traducao = []
-            sequencia = re.findall('...', seq[i:])
-            for x in sequencia:
-                traducao.append(gencode[x])
-            traducao = "".join(traducao)
-            proteina.extend(re.findall('M.*?_', traducao))
-        return(proteina)
+        def traducao(seq):
+            proteina = []
+            for i in range(3):
+                traducao = []
+                sequencia = re.findall('...', seq[i:])
+                for x in sequencia:
+                    traducao.append(gencode[x])
+                    traducao = "".join(traducao)
+                proteina.extend(re.findall('M.*?_', traducao))
+            return(proteina)
     
-    def customkey(protein):
-        return -len(protein), protein
+        def customkey(protein):
+            return -len(protein), protein
     
-    protein = []
-    protein = traducao(seq)
+        protein = []
+        protein = traducao(seq)
     
-    protein = list(dict.fromkeys(protein))
+        protein = list(dict.fromkeys(protein))
 
-    protein = sorted(protein, key = customkey)
-    print("\n".join(protein))
-    
-
-
-    
-
-
-        
-
-
-
-
-
-
-
-    
-
-
+        protein = sorted(protein, key = customkey)
+        return(protein)
+    else:
+        return('seq inexistente')
     
