@@ -1,25 +1,23 @@
-def tranforma():
+def tranforma(filename):
     '''
     Função responsável por receber um ficheiro
     e de dar return de uma sequência em string
     '''
-    filename = input ("filename: ")
     my_file = open(filename)
     my_file = my_file.readline()
     return(my_file)
 
-def FASTARead():
+def FASTARead(filename):
     '''
     Função responsável por receber um ficheiro FASTA e
     devolve uma sequência
     '''
 
-    filename = input("FASTAfile: ")
     with open(filename, 'r') as readfile:
         seq = readfile.readlines()[1:]
         seq = [x.replace('\n', '') for x in seq]
         seq = ''.join(seq)
-    print(seq)
+    return(seq)
 
 def complemento_inverso():
     '''
@@ -195,6 +193,14 @@ def proteins():
 
     protein = sorted(protein, key = customkey)
     print("\n".join(protein))
+    
+    
+    
+    
+    
+
+
+        
 
 
 
