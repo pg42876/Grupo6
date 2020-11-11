@@ -94,7 +94,9 @@ def validarseq(seq):
     se uma sequência é válida ou não
     '''
     seq = seq.upper()
-    if len(set(seq) - {'A','C','G','T'})==0:
+    if seq == "":
+        return (False)
+    elif len(set(seq) - {'A','C','G','T'})==0:
         return (True)
     else:
         return (False)
@@ -153,16 +155,18 @@ def reading_frames(seq):
     if validarseq(seq)==True:
         seq1 = seq [::-1]
         seq1 = seq1.replace('A','t').replace('T','a').replace('C','g').replace('G','c').upper()
-        l2 = []
-        for x in range(3):
-            l2.eppend(traduz(seq1[x:]))
-    
         l1 = []
+        for x in range(3):
+            l1.append(traduz(seq1[x:]))
+    
+        l2 = []
         for a in range(3):
-            l1.append(traduz(seq[a:]))
+            l2.append(traduz(seq[a:]))
         l3 = []
         l3 = l2 + l1
         return(l3)
+    else:
+        return('sequência inválida')
 
 def proteins(seq):
     '''
@@ -173,6 +177,8 @@ def proteins(seq):
     '''
     seq = seq.upper()
     if validarseq(seq)==True:
+        seq1 = seq [::-1]
+        seq1 = seq1.replace('A','t').replace('T','a').replace('C','g').replace('G','c').upper()
         import re
         gencode = {
                 'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
@@ -203,22 +209,27 @@ def proteins(seq):
                 proteina.extend(re.findall('M.*?_', traducao))
             return(proteina)
     
-        def customkey(protein):
-            return -len(protein), protein
+        def customkey(proteina):
+            return -len(proteina), proteina
     
         protein = []
         protein = traducao(seq)
+        protein_inv = []
+        protein_inv = traducao(seq1)
+        
+        proteina = protein + protein_inv
     
-        protein = list(dict.fromkeys(protein))
+        proteina = list(dict.fromkeys(proteina))
 
-        protein = sorted(protein, key = customkey)
-        return(protein)
+        proteina = sorted(proteina, key = customkey)
+        return(proteina)
     else:
         return('seq inexistente')
     
 
 
-    
+
+
 
 
         
