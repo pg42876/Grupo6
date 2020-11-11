@@ -87,6 +87,19 @@ def validarseq():
     else:
         return (False)
 
+def contar_bases():
+    '''
+    Função que conta as bases de uma sequência e
+    devolve um dicionário com a contagem
+    '''
+    seq = input('Insira uma sequência: ')
+    nucleotidos = {}
+    for x in seq:
+        if x not in nucleotidos:
+            nucleotidos [x]= 0
+        nucleotidos[x]+= 1
+    return(nucleotidos)
+            
 
 
 
