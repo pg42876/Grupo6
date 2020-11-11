@@ -5,7 +5,10 @@ def tranforma(filename):
     '''
     my_file = open(filename)
     my_file = my_file.readline()
-    return(my_file)
+    if validarseq(my_file) == True:
+        return(my_file)
+    else:
+        return('O ficheiro não pode ser convertido numa seq')
 
 def FASTARead(filename):
     '''
@@ -17,19 +20,27 @@ def FASTARead(filename):
         seq = readfile.readlines()[1:]
         seq = [x.replace('\n', '') for x in seq]
         seq = ''.join(seq)
-    return(seq)
+        if seq == '':
+            return('Não é um ficheiro Fasta')
+        else:
+            if validarseq(seq) == True:
+                return(seq)
+            else:
+                return('O ficheiro não pode ser convertido numa seq')
 
 def complemento_inverso(seq):
     '''
     Função responsável por devolver o 
     complemento inverso de uma sequência de DNA
     '''
+    seq = seq.upper()
     if validarseq(seq) == True :
         seq = seq[::-1]
         seq = seq.replace('A', 't').replace('T', 'a').replace('C', 'g').replace('G', 'c').upper()
         return(seq)
     else:
-        raise()
+        return('A string inserida não é considerado uma sequência')
+    
 
 def transcricao(seq):
     '''
@@ -190,9 +201,8 @@ def proteins(seq):
     protein = sorted(protein, key = customkey)
     print("\n".join(protein))
     
-    
-    
-    
+
+
     
 
 
