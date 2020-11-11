@@ -24,9 +24,12 @@ def complemento_inverso(seq):
     Função responsável por devolver o 
     complemento inverso de uma sequência de DNA
     '''
-    seq = seq[::-1]
-    seq = seq.replace('A', 't').replace('T', 'a').replace('C', 'g').replace('G', 'c').upper()
-    return(seq)
+    if validarseq(seq) == True :
+        seq = seq[::-1]
+        seq = seq.replace('A', 't').replace('T', 'a').replace('C', 'g').replace('G', 'c').upper()
+        return(seq)
+    else:
+        raise()
 
 def transcricao(seq):
     '''
