@@ -4,17 +4,17 @@ import AASB
 
 class TestAASB(unittest.TestCase):
     
-    def setUp(self):
-        self.
+    #def setUp(self):
+        #self.AASB = AASB.transforma('Ficha 4.txt')
     
-    def test_tranforma(self):
-        self.assertEqual(AASB.tranforma('Ficha 4.txt'), 'AAAAAAAGGGGGGGGGGG')
-        self.assertRaises(Exception, 'O ficheiro não pode ser convertido numa seq', AASB.tranforma )
+    def test_transforma(self):
+        self.assertEqual(AASB.transforma('Ficha 4.txt'), 'AAAAAAAGGGGGGGGGGG')
+        self.assertRaises(Exception, 'O ficheiro não pode ser convertido numa seq', AASB.transforma )
             
         
     def test_FASTARead(self):
         self.assertEqual(AASB.FASTARead ('sequence.fasta'), 'CTCCGGATATCGACCCATAACGGGCAATGATAAAAGGAGTAACCTGTGAAAAAGATGCAATCTATCGTACTCGCACTTTCCCTGGTTCTGGTCGCTCCCATGGCAGCACAGGCTGCGGAAATTACGTTAGTCCCGTCAGTAAAATTACAGATAGGCGATCGTGATAATCGTGGCTATTACTGGGATGGAGGTCACTGGCGCGACCACGGCTGGTGGAAACAACATTATGAATGGCGAGGCAATCGCTGGCACCTACACGGACCGCCGCCACCGCCGCGCCACCATAAGAAAGCTCCTCATGATCATCACGGCGGTCATGGTCCAGGCAAACATCACCGCTAAATGACAAATGCCGGGTAACAATCCGGCATTCAGCGCCTGATGC')
-        self.assertRaises(Exception, 'O ficheiro não pode ser convertido numa seq', AASB.tranforma)
+        self.assertRaises(Exception, 'O ficheiro não pode ser convertido numa seq', AASB.FASTARead)
         
     def test_complemento_inverso(self):
         self.assertEqual(AASB.complemento_inverso("ATGCGGTAGAGTCGAA"), "TTCGACTCTACCGCAT")

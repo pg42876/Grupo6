@@ -18,11 +18,18 @@ def genecode():
                 'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W'}
     return genecode
 
-def tranforma(filename):
-    '''
-    Função responsável por receber um ficheiro
-    e de dar return de uma sequência em string
-    '''
+def transforma(filename):
+    """
+Recebe um ficheiro txt cotendo uma sequância de bases e devolve a sequência do ficheiro.
+
+PARAMETERS
+----------
+txt: ficheiro txt a ser aberto
+    É uma sequência de bases de um DNA.
+
+returns: Uma string da sequência do ficheiro em letras maiúsculas.
+Exception: O ficheiro não pode ser convertido numa sequência.
+"""
     my_file = open(filename)
     my_file = my_file.readline()
     if validarseq(my_file) == True:
@@ -31,10 +38,17 @@ def tranforma(filename):
     raise Exception('O ficheiro não pode ser convertido numa seq')
 
 def FASTARead(filename):
-    '''
-    Função responsável por receber um ficheiro FASTA e
-    devolve uma sequência
-    '''
+    """
+Recebe um ficheiro FASTA  e devolve o conteúdo do ficheiro.
+
+PARAMETRES
+----------
+FASTA: ficheiro no formato FASTA.
+    É uma sequência de bases de um DNA.
+
+returns: Uma string apenas com as linhas das bases, concatenadas, em letras maiúsculas.
+Exception: O ficheiro não pode ser convertido numa sequência
+    """
     with open(filename, 'r') as readfile:
         seq = readfile.readlines()[1:]
         seq = [x.replace('\n', '') for x in seq]
@@ -46,24 +60,44 @@ def FASTARead(filename):
         raise Exception('O ficheiro não pode ser convertido numa seq')
 
 def complemento_inverso(seq):
-    '''
-    Função responsável por devolver o 
-    complemento inverso de uma sequência de DNA
-    '''
+    """
+Função que recebe uma sequência de DNA e devolve o complemento inverso dessa sequência.
+
+PARAMETERS
+----------
+seq: string
+    É uma sequência de DNA.
+
+returns: Uma string com o complemento inverso da sequência, caso a sequência seja válida.
+"""
     seq = seq[::-1]
     seq = seq.replace('A', 't').replace('T', 'a').replace('C', 'g').replace('G', 'c').upper()
     return(seq)
     
 def transcricao(seq):
-    '''
-    Função responsável pela transcrição de DNA
-    '''
+    """
+Função que recebe uma sequência de DNA e devolve o transcrito dessa sequência.
+
+PARAMETERS
+----------
+seq: string
+    É uma sequência de DNA.
+
+returns: Uma string com o complemento inverso da sequência, caso a sequência seja válida.
+"""
     return (seq.replace('T', 'U'))
 
 def traducao(seq):
-    '''
-    Função responsável pela tradução da cadeia de DNA
-    '''
+    """
+Função que recebe uma sequência de DNA e devolve as possiveis sequências de aminoácidos.
+
+PARAMETERS
+----------
+seq: string
+    É uma sequência de DNA.
+
+returns: Devolve a Tradução de um sequência de DNA
+    """
     gene = genecode()
     import re
     DNA = re.findall('...', seq)
@@ -74,10 +108,16 @@ def traducao(seq):
     return(result)
     
 def validarseq(seq):
-    '''
-    Função responsável por verificar 
-    se uma sequência é válida ou não
-    '''
+    """
+Função que recebe uma sequência de bases que para ser validada como DNA.
+
+PARAMETERS
+----------
+seq: string
+    É uma sequência de DNA.
+
+returns: True se a sequência for válida e False se a sequência não for válida.    
+    """
     seq = seq.upper()
     if seq == "":
         return (False)
@@ -87,10 +127,17 @@ def validarseq(seq):
         return (False)
 
 def contar_bases(seq):
-    '''
-    Função que conta as bases de uma sequência e
-    devolve um dicionário com a contagem
-    '''
+    """
+Função que recebe uma sequência de DNA e conta o número de bases da sequência.
+
+PARAMETERS
+----------
+seq: string
+    É uma sequência de DNA.
+    
+returns: Um dicionário em que uma chave corresponde a um caracter da sequência e o valor dessa chave corresponde ao número de ocorrências desse caracter na sequência, caso a sequência seja válida.
+         A ordem das chaves no dicionário corresponde à ordem de aparecimento dos caracteres na sequência.
+    """
     nucleotidos = {}
     for x in seq:
         if x not in nucleotidos:
@@ -99,9 +146,16 @@ def contar_bases(seq):
     return(nucleotidos)
 
 def reading_frames(seq):
-    '''
-    Função que devolve uma lista com as reading frames
-    '''
+    """
+Função que recebe uma sequência de DNA e devolve os codões presentes na sequência.
+
+PARAMETERS
+----------
+seq: string
+    É uma sequência de DNA.
+    
+returns: Devolve todos os codões presentes no DNA começando a tradução na posição 1, 2 e 3, e a tradução do inverso nas posições 1, 2 e 3 da mesma sequência de DNA  
+    """
     seq_inv = complemento_inverso(seq)
     l1 = []
     for x in range(3):
@@ -114,12 +168,17 @@ def reading_frames(seq):
     return(l3)
 
 def proteins(seq):
-    '''
-    Função que devolve a lista de todas
-    as proteínas ordenadas por tamanho e 
-    por ordem alfabética para as do mesmo
-    tamanho
-    '''
+    """
+Função que recebe uma sequência de DNA e devolve a sequência das proteínas possíveis.
+
+PARAMETERS
+----------
+seq: string
+    É uma sequência de DNA.
+    
+returns: Uma ou mais listas com a sequência aminoacidica das proteínas possíveis, traduzidas a partir dessa sequência, caso a sequência seja válida.
+         Uma lista vazia corresponde a uma sequência de DNA inicial sem proteínas possíveis, caso a sequência seja válida.
+    """
     import re
     traducao = reading_frames(seq)
     traducao = ''.join(traducao)
